@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}show tasks page{% endblock  %}
+{% block content %}
+<h1 class="text-center bg-primary text-white w-75 my-4 mx-auto rounded-3 p-2">Tasks</h1>
+{% if data %}
+<div class="table-responsive w-75 m-auto">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in data %}
+            {% if not task.is_completed %}
+            <tr>
+                <td>{{task.taskTitle}}</td>
+                <td>{{task.taskDescription}}</td>
+                <td>Incomplete</td>
+                <td>
+                    <a href="{% url 'deletetasks' pk=task.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'updatetasks' pk=task.id %}" class="btn btn-primary mx-3">Edit</a>
+                    <a href="{% url 'completetasks' pk=task.id %}" class="btn btn-success">Complete</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<h2 class="text-center border border-warning bg-info-subtle w-75 my-4 mx-auto rounded-3 p-4">No Task Available</h2>
+{% endif %}
+{% endblock  %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="border border-warning bg-info-subtle w-75 my-4 mx-auto rounded-3 p-2">
+    <h2 class="text-center">Are you sure?</h2>
+    <h2 class="text-center">Do you want to delete it?</h2>
+</div>
+<form method="post" class="w-50 m-auto text-center">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-warning fw-bold">Confirm</button>
+</form>
+{% endblock  %}
