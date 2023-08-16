@@ -4,6 +4,7 @@ from .models import TaskModel
 from .form import TaskForm
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
+from django.views import View
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -35,10 +36,19 @@ class TaskUpdateView(UpdateView):
     form_class = TaskForm
     success_url = reverse_lazy('showtasks')
     
+# def CompleteTaskUpdateView(request, pk):
+#     data = TaskModel.objects.all()
+#     item = TaskModel.objects.get(id=pk)
+#     item.is_completed = True
+#     item.save()
+#     return render(request, 'completed_tasks.html', {'data':data})
 
-def CompleteTaskUpdateView(request, pk):
-    data = TaskModel.objects.all()
-    item = TaskModel.objects.get(id=pk)
-    item.is_completed = True
-    item.save()
-    return render(request, 'completed_tasks.html', {'data':data})
+class CompleteTaskUpdateView(View):
+    template_name = 'completed_tasks.html'
+    def get(self, request, pk):
+        data = TaskModel.objects.all()
+        item = TaskModel.objects.get(id=pk)
+        item.is_completed = True
+        item.save()
+        return render(request, self.template_name, {'data': data})
+    
